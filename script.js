@@ -135,12 +135,12 @@ function setupWorld(){
                                      { x: 5, y: 4 },
                                      { x: 4, y: 5 }
                                      ]);
-
 	bot = new Robot(world, 0, 0, "E");
 }
 
 function resetWorldAndDraw(){
 	setupWorld()
+	context.bot = bot
 	draw()
 }
 
@@ -645,19 +645,25 @@ class Context {
 		this.instructions = []  // clear the output 
 		let compilestack = []  // stack for compilation purposes (if..then, mainly)
 		let loopstack = [] // stack of loop start instructions
-		
+
 		const actions = document.getElementById("programBox")
 		.value
 		.split("\n")
-		.map(a => a.trim().toLowerCase())
-		.filter(a => a !== "");
+		.map(a => a.trim().toLowerCase());
 		
 		try {
 			for(let lineno=0;lineno<actions.length;lineno++){
-				const line = actions[lineno]
+				let line = actions[lineno]
+				// deal with comments
+				if(line.includes("#")){
+					line = line.split("#")[0]
+					console.log("Split - now "+line)
+				}
 				// lines can consist of multiple commands separated by semicolons.
 				// Be aware that "print" strings with semicolons in will mess this up!
-				for(const action of line.split(";")){
+				for(let action of line.split(";")){
+
+					if(action==="")continue; // ignore semicolon at end of line and blank line
 					// note that within a line the line number is constant
 					console.log("Compiling "+action)
 					console.log("   loopstack="+loopstack.length+" compilestack="+compilestack.length)

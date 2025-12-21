@@ -1,0 +1,34 @@
+# That's one way to do it! But it only 
+# works on this one map.
+
+begin 2
+begin 9;scan;forward;end
+scan;right;forward;right
+begin 9;scan;forward;end
+scan;left;forward;left
+end
+
+begin 3;scan;forward;end
+scan;right;forward;right
+begin 3;scan;forward;end
+scan;left;forward;left
+
+begin 2
+begin 9;scan;forward;end
+scan;right;forward;right
+begin 9;scan;forward;end
+scan;left;forward;left
+end
+
+begin 9;forward;end;left
+begin 3;forward;end;scan;forward;scan;left
+
+begin 4;scan;forward;end;right;right;scan;forward
+left;forward;right;
+begin 3;scan;forward;end;scan
+
+if allscanned
+	print "All scanned OK"
+else
+	print "oops, missed some!"
+endif

@@ -126,3 +126,23 @@ if rolled 20
 endif
 ```
 
+## Multi-command lines
+
+You can put more than one command on a line by separating them with semicolons:
+```
+begin
+	if blocked
+		right
+	else if onscanned
+		roll 4;if rolled 1;right;endif
+	else
+		if facingscanned;right;endif
+		scan
+	endif
+	forward
+	
+	if allscanned
+		stop
+	endif
+end
+```

@@ -1,0 +1,15 @@
+begin
+	if blocked
+		right
+	else if onscanned
+		roll 4;if rolled 1;right;endif
+	else
+		if facingscanned;right;endif
+		scan
+	endif
+	forward
+	
+	if allscanned
+		stop
+	endif
+end
