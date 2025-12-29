@@ -49,8 +49,14 @@
 			<div class="row"><button class="m-2 btn btn-light" onclick="stepProgram()">▶ Single Step</button></div>
 			<div class="row"><button class="m-2 btn btn-light" onclick="clearProgram()">✖ Clear Program</button></div>
 			<div class="row"><button class="m-2 btn btn-light" onclick="stopProgram()">🛑 Stop Program</button></div>
-			<div class="row"><button class="m-2 btn btn-light" onclick="resetWorldAndDraw()">↻ Reset World</button></div>			
-			<div class="row"><button class="m-2 btn btn-secondary" onclick="showInstructions()">Show instructions</button></div>			
+			<div class="row"><button class="m-2 btn btn-light" onclick="resetWorldAndDraw()">↻ Reset World</button></div>
+                        <!--
+			<div class="row"><button class="m-2 btn btn-secondary" onclick="showInstructions()">Show Instructions</button></div>
+                        -->
+                        
+			<div class="row">
+                            <a href="./syntax.html" class="m-2 btn btn-secondary" target="new">Program Help</a>
+                        </div>			
 		</div>
 	</div>
 	<div class="row pt-4 mt-2" style="height:200px;">
@@ -71,6 +77,9 @@ Y: <input type="number" id="targetY" min="0" max="9">
 <button onclick="goToCoordinate()">Go</button>
 -->
 
+<script src="entities.js"></script>
+<script src="insts.js"></script>
+<script src="language.js"></script>
 <script src="script.js"></script>
 
 </body>

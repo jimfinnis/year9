@@ -1,0 +1,27 @@
+nav ul {
+    padding-inline-start: 20px;
+}
+nav li {
+    padding-bottom:10px;
+    /*
+      border-bottom:solid;
+      border-width:1px;
+      border-color:#ddd;
+      */
+}
+
+pre {
+    color: #140c7f;
+    padding:1em;
+    background-color: #f0f0f5;
+}
+
+h1 {
+    padding-bottom: 1em;
+}
+
+h2 {
+    padding-top:1em;
+    padding-bottom: 0.3em;
+}
+

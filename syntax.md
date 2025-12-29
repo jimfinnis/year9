@@ -17,12 +17,14 @@
 * **leave** - leave a loop (typically used inside an if-statement, see below)
 
 An example:
+
 ```
 begin
     print "This loop runs forever!"
     forward
 end
 ```
+
 The indenting isn't necessary but makes code easier to read.
 Loops can be nested (you can have loops in loops):
 ```

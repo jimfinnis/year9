@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="/favicon.ico">
+        
+        <title>Exomars GridWorld language</title>
+        
+        <script
+          src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" href="syntax.css">
+
+    </head>
+    <body>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-lg-2">
+            <nav class="sticky-top vh-100 overflow-auto pt-3">
+                <ul><li><a href="#language-syntax">Language syntax</a><ul><li><a href="#simple-commands">Simple commands</a></li><li><a href="#loops">Loops</a></li><li><a href="#if-statements">If-statements</a></li><li><a href="#if-else-statements">If-else statements</a></li><li><a href="#else-if">else-if</a></li><li><a href="#conditions-in-if-statements">Conditions in if-statements</a></li><li><a href="#randomness">Randomness</a></li><li><a href="#multi-command-lines">Multi-command lines</a></li></ul></li></ul>
+            </nav>
+            </div>
+            <main class="col-md-9 col-lg-10 p-3">
+                <h1 id="language-syntax">Language syntax</h1>
+<h2 id="simple-commands">Simple commands</h2>
+<ul>
+<li><strong>forward</strong> - move robot forward (if unblocked)</li>
+<li><strong>left</strong> or <strong>turnleft</strong> - turn robot left</li>
+<li><strong>right</strong> or <strong>turnright</strong> - turn robot right</li>
+<li><strong>scan</strong> - scan the current square (if not already scanned)</li>
+<li><strong>print "text"</strong> - print a string of text</li>
+<li><strong>stop</strong> - terminate the program</li>
+</ul>
+<h2 id="loops">Loops</h2>
+<ul>
+<li><strong>begin</strong> - start an infinite loop (well, nearly infinite)</li>
+<li><strong>begin 10</strong> - start a 10-times loop (you can use any number)</li>
+<li><strong>end</strong> - end a loop</li>
+<li><strong>leave</strong> - leave a loop (typically used inside an if-statement, see below)</li>
+</ul>
+<p>An example:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">begin</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;This loop runs forever!&quot;</span>
+<span class="w">    </span><span class="nv">forward</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>The indenting isn't necessary but makes code easier to read.
+Loops can be nested (you can have loops in loops):</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">begin</span><span class="w"> </span><span class="mi">4</span>
+<span class="w">    </span><span class="nv">forward</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;This outer loop runs 4 times&quot;</span>
+<span class="w">    </span><span class="nv">begin</span><span class="w"> </span><span class="mi">4</span>
+<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;This inner loop runs 4 times and makes the robot turn on the spot&quot;</span>
+<span class="w">        </span><span class="nv">right</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<h2 id="if-statements">If-statements</h2>
+<p>An example of a basic if-statement:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">blocked</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I can&#39;t move&quot;</span>
+<span class="k">endif</span>
+</code></pre></div>
+
+<p>A full list of conditions that can replace "blocked" in the example is given later.
+Conditions can be nested (you can put if-statements inside other if-statements):</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="n">blocked</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">movingright</span>
+<span class="w">        </span><span class="k">print</span><span class="w"> </span><span class="ss">&quot;I&#39;m blocked while trying to go right&quot;</span>
+<span class="w">    </span><span class="n">endif</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">movingleft</span>
+<span class="w">        </span><span class="k">print</span><span class="w"> </span><span class="ss">&quot;I&#39;m blocked while trying to go left&quot;</span>
+<span class="w">    </span><span class="n">endif</span>
+<span class="n">endif</span>
+</code></pre></div>
+
+<h2 id="if-else-statements">If-else statements</h2>
+<p>You can also have an else part, which happens when the condition is not true:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">blocked</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m blocked!&quot;</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I can move into the next square&quot;</span>
+<span class="k">endif</span>
+</code></pre></div>
+
+<p>These can also be nested - and you can also put loops inside if-statements and if-statements inside loops. </p>
+<h2 id="else-if">else-if</h2>
+<p>It's also possible to have a chain of "if" and "else if" statements like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">movingleft</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m going left!&quot;</span>
+<span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">movingright</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m going right!&quot;</span>
+<span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">movingup</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m moving up!&quot;</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m going somewhere else! Down, it has to be!&quot;</span>
+<span class="k">endif</span>
+</code></pre></div>
+
+<h2 id="conditions-in-if-statements">Conditions in if-statements</h2>
+<ul>
+<li><strong>blocked</strong> - the square in front is outside the grid or contains an obstacle</li>
+<li><strong>facingscanned</strong> - the square in front has already been scanned</li>
+<li><strong>onscanned</strong> - the square with the robot inside has been scanned</li>
+<li><strong>movingright</strong> - the robot is moving right</li>
+<li><strong>movingleft</strong> - the robot is moving left</li>
+<li><strong>movingup</strong> - the robot is moving up</li>
+<li><strong>movingdown</strong> - the robot is moving doown</li>
+<li><strong>allscanned</strong> - all squares have been scalled</li>
+</ul>
+<h2 id="randomness">Randomness</h2>
+<p>Sometimes it's useful to run some parts of the program depending on a random condition. The simplest way to do this is with <strong>cointoss</strong>, which makes the code inside the if-statement run half the time, at random:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">cointoss</span>
+<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;Heads&quot;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;Tails&quot;</span>
+<span class="w">    </span><span class="k">endif</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>You can also <strong>roll</strong> a die and check to see if a particular number came up with <strong>rolled</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">begin</span>
+<span class="w">    </span><span class="nv">roll</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">rolled</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;You rolled a one&quot;</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">rolled</span><span class="w"> </span><span class="mi">6</span>
+<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;You rolled a six!&quot;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;You rolled something else, it&#39;s not important.&quot;</span>
+<span class="w">    </span><span class="k">endif</span>
+</code></pre></div>
+
+<p>For the Dungeons and Dragons players among you, you can roll a die of any number of sides:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">roll</span><span class="w"> </span><span class="mi">20</span>
+<span class="k">if</span><span class="w"> </span><span class="nv">rolled</span><span class="w"> </span><span class="mi">20</span>
+<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;You rolled a 20!!!&quot;</span>
+<span class="k">endif</span>
+</code></pre></div>
+
+<h2 id="multi-command-lines">Multi-command lines</h2>
+<p>You can put more than one command on a line by separating them with semicolons:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">blocked</span>
+<span class="w">        </span><span class="nv">right</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">onscanned</span>
+<span class="w">        </span><span class="nv">roll</span><span class="w"> </span><span class="mi">4</span><span class="c1">;if rolled 1;right;endif</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nv">facingscanned</span><span class="c1">;right;endif</span>
+<span class="w">        </span><span class="nv">scan</span>
+<span class="w">    </span><span class="k">endif</span>
+<span class="w">    </span><span class="nv">forward</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">allscanned</span>
+<span class="w">        </span><span class="nv">stop</span>
+<span class="w">    </span><span class="k">endif</span>
+<span class="k">end</span>
+</code></pre></div>
+            </main>
+        </div>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</body></html>
+    </body>
+</html>
