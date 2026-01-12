@@ -53,7 +53,8 @@ end
 			<div class="row"><button class="m-2 btn btn-light" onclick="addAction('scan')">Add Scan</button></div>
 			<div class="row"><h4>Program control</h4></div>
 			<div class="row"><button class="m-2 btn btn-light" onclick="runProgram()">▶ Run Program</button></div>
-			<div class="row"><button class="m-2 btn btn-light" onclick="stepProgram()">▶ Single Step</button></div>
+			<!-- shift on the step button will reset the program counter -->
+			<div class="row"><button class="m-2 btn btn-light" onclick="stepProgram(event)">▶ Single Step (hold shift to restart)</button></div>
 			<div class="row"><button class="m-2 btn btn-light" onclick="clearProgram()">✖ Clear Program</button></div>
 			<div class="row"><button class="m-2 btn btn-light" onclick="stopProgram()">🛑 Stop Program</button></div>
 			<div class="row"><button class="m-2 btn btn-light" onclick="resetWorldAndDraw()">↻ Reset World</button></div>

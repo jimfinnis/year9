@@ -28,6 +28,7 @@ function setupWorld(){
 function resetWorldAndDraw(){
 	setupWorld()
 	language.bot = bot
+	language.reset()
 	draw()
 }
 
@@ -198,7 +199,11 @@ function highlightProgLine(n){
 
 	
 	
-function stepProgram(){
+function stepProgram(event){
+	if(event.shiftKey || !language.hasCompiledProgram()){
+		language.reset(bot)
+		language.compile(document.getElementById("programBox").value)
+	}
 	language.step()
 	draw()
 }

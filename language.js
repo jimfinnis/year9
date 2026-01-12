@@ -230,8 +230,12 @@ class Language {
 			throw e // rethrow for console inspection
 		}
 	}
+
+	hasCompiledProgram(){
+		return this.instructions.length > 0
+	}
 	
-	// run a single program step
+	// run a single program step - there must be a compiled program!
 	step(){
 		if(this.pc>=this.instructions.length)return;
 		if(this.stopFlag){
