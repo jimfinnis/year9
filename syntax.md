@@ -93,8 +93,18 @@ endif
 * **movingright** - the robot is moving right
 * **movingleft** - the robot is moving left
 * **movingup** - the robot is moving up
-* **movingdown** - the robot is moving doown
-* **allscanned** - all squares have been scalled
+* **movingdown** - the robot is moving down
+* **allscanned** - all squares have been scanned
+
+## Using "not" in conditions
+You can also put **not** in front of any condition:
+```
+if not blocked
+    print "I can go forward!"
+        forward
+    scan
+endif
+```
 
 ## Randomness
 
