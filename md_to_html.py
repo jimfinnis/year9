@@ -25,7 +25,6 @@ def toc(tokens):
 with open("syntax.md") as f:
     html = md.convert(f.read())
     toc_html = toc(md.toc_tokens)
-    print(toc_html)
     with open("syntax_template.html") as f2:
         template = f2.read()
         html = template.replace("CONTENTSHERE",html)
