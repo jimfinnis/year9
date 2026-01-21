@@ -10,9 +10,12 @@
 </head>
 <body>
 
-<h2>ExoMars Rover Grid World</h2>
 
 <div class="container m-0 p-0 w-100">
+	<div class="row">
+		<div class="col-6 h2">ExoMars Rover Grid World</div>
+		<div class="col-6 d-flex justify-content-end"> <img src="aberlogo.png" style="height:3em;"/></div>
+	</div>
 	<div class="row">
 		<div class="col-md-4 p-3">
 			<div class="row"><h4>Grid world</h4></div>
@@ -21,12 +24,15 @@
 			</div>
 			<!-- Manual Controls -->
 			<div class="row justify-content-center">
-				<button class="m-1 col-md-5 btn btn-primary" onclick="bot.turnLeft(); draw()">Turn Left</button>
-				<button class="m-1 col-md-5 btn btn-primary" onclick="bot.turnRight(); draw()">Turn Right</button>
+				<button class="m-1 col-md-5 btn btn-primary" onclick="bot.turnLeft(); draw()">↶ Turn Left</button>
+				<button class="m-1 col-md-5 btn btn-primary" onclick="bot.turnRight(); draw()">↷ Turn Right</button>
 			</div>
 			<div class="row justify-content-center">
-				<button class="m-1 col-md-5 btn btn-primary" onclick="bot.moveForward(); draw()">Move Forward</button>
-				<button class="m-1 col-md-5 btn btn-primary" onclick="scanCell(bot)">Scan for Alien Life</button>
+				<button class="m-1 col-md-5 btn btn-primary" onclick="bot.moveForward(); draw()">↑ Move Forward</button>
+				<button class="m-1 col-md-5 btn btn-primary" onclick="scanCell(bot)">🔍 Scan for Alien Life</button>
+			</div>
+			<div class="row pt-5">
+				Version 2, 21/1/26
 			</div>
 		</div>
 		<div class="col-md-6 p-3">
@@ -37,7 +43,7 @@
 				<textarea id="programBox" placeholder=
 "Write your program here. For more details of the programming language, click the Program Help button. Here's what a program might look like:
 
-begin 20
+repeat 20
 if blocked;right;endif
 scan;forward
 end
@@ -48,22 +54,27 @@ end
 			<!-- Buttons to add actions -->
 			<div class="row"><h4>Add actions</h4></div>
 			<div class="row"><button class="m-2 btn btn-light" onclick="addAction('forward')">Add Forward</button></div>
-			<div class="row"><button class="m-2 btn btn-light" onclick="addAction('left')">Add Left</button></div>
-			<div class="row"><button class="m-2 btn btn-light" onclick="addAction('right')">Add Right</button></div>
+			<div class="row"><button class="m-2 btn btn-light" onclick="addAction('turnleft')">Add Turn Left</button></div>
+			<div class="row"><button class="m-2 btn btn-light" onclick="addAction('turnright')">Add Turn Right</button></div>
 			<div class="row"><button class="m-2 btn btn-light" onclick="addAction('scan')">Add Scan</button></div>
 			<div class="row"><h4>Program control</h4></div>
-			<div class="row"><button class="m-2 btn btn-light" onclick="runProgram()">▶ Run Program</button></div>
+			<div class="row"><button class="m-2 btn btn-light" onclick="runProgram(event)"
+				data-bs-toggle="tooltip" data-bs-placement="top" title="Run the program from the start until it ends, runs a 'stop' instruction, or you click Stop Program">▶ Run Program</button></div>
+			<div class="row"><button class="m-2 btn btn-light" onclick="reformatProgram()"
+				data-bs-toggle="tooltip" data-bs-placement="top" title="Tidy up the program and turn multi-statement lines into separate lines">🛠️ Tidy Program</button></div>
 			<!-- shift on the step button will reset the program counter -->
-			<div class="row"><button class="m-2 btn btn-light" onclick="stepProgram(event)">▶ Single Step (hold shift to restart)</button></div>
-			<div class="row"><button class="m-2 btn btn-light" onclick="clearProgram()">✖ Clear Program</button></div>
-			<div class="row"><button class="m-2 btn btn-light" onclick="stopProgram()">🛑 Stop Program</button></div>
-			<div class="row"><button class="m-2 btn btn-light" onclick="resetWorldAndDraw()">↻ Reset World</button></div>
-                        <!--
-			<div class="row"><button class="m-2 btn btn-secondary" onclick="showInstructions()">Show Instructions</button></div>
-                        -->
-                        
+			<div class="row"><button class="m-2 btn btn-light" onclick="stepProgram(event)"
+				data-bs-toggle="tooltip" data-bs-placement="top" title="Run a single line of the program. If you press with the shift key down, will restart it and run the first line">▶ Single Step (hold shift to restart)</button></div>
+			<div class="row"><button class="m-2 btn btn-light" onclick="clearProgram()"
+				data-bs-toggle="tooltip" data-bs-placement="top" title="Delete the entire program!">✖ Clear Program</button></div>
+			<div class="row"><button class="m-2 btn btn-light" onclick="stopProgram()"
+				data-bs-toggle="tooltip" data-bs-placement="top" title="Stop a running program">🛑 Stop Program</button></div>
+			<div class="row"><button class="m-2 btn btn-light" onclick="resetWorldAndDraw()"
+				data-bs-toggle="tooltip" data-bs-placement="top" title="Clear all scanned squares and put the rover back to the start">↻ Reset World</button></div>
 			<div class="row">
-                            <a href="./syntax.html" class="m-2 btn btn-secondary" target="new">Program Help</a>
+                            <a href="./syntax.html" class="m-2 btn btn-secondary" target="new"
+							data-bs-toggle="tooltip" data-bs-placement="top" title="Open a new tab in the browser with complete details of the rover's language"
+							>Program Help</a>
                         </div>			
 		</div>
 	</div>

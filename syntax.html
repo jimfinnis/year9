@@ -35,30 +35,30 @@
 <li><strong>left</strong> or <strong>turnleft</strong> - turn robot left</li>
 <li><strong>right</strong> or <strong>turnright</strong> - turn robot right</li>
 <li><strong>scan</strong> - scan the current square (if not already scanned)</li>
-<li><strong>print "text"</strong> - print a string of text</li>
+<li><strong>say "text"</strong> - write some text to the Robot Output box</li>
 <li><strong>stop</strong> - terminate the program</li>
 </ul>
 <h2 id="loops">Loops</h2>
 <ul>
-<li><strong>begin</strong> - start an infinite loop (well, nearly infinite)</li>
-<li><strong>begin 10</strong> - start a 10-times loop (you can use any number)</li>
+<li><strong>repeat</strong> - start an infinite loop (well, nearly infinite)</li>
+<li><strong>repeat 10</strong> - start a 10-times loop (you can use any number)</li>
 <li><strong>end</strong> - end a loop</li>
 <li><strong>leave</strong> - leave a loop (typically used inside an if-statement, see below)</li>
 </ul>
 <p>An example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">begin</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;This loop runs forever!&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">repeat</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;This loop runs forever!&quot;</span>
 <span class="w">    </span><span class="nv">forward</span>
 <span class="k">end</span>
 </code></pre></div>
 
 <p>The indenting isn't necessary but makes code easier to read.
 Loops can be nested (you can have loops in loops):</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">begin</span><span class="w"> </span><span class="mi">4</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">repeat</span><span class="w"> </span><span class="mi">4</span>
 <span class="w">    </span><span class="nv">forward</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;This outer loop runs 4 times&quot;</span>
-<span class="w">    </span><span class="nv">begin</span><span class="w"> </span><span class="mi">4</span>
-<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;This inner loop runs 4 times and makes the robot turn on the spot&quot;</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;This outer loop runs 4 times&quot;</span>
+<span class="w">    </span><span class="nv">repeat</span><span class="w"> </span><span class="mi">4</span>
+<span class="w">        </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;This inner loop runs 4 times and makes the robot turn on the spot&quot;</span>
 <span class="w">        </span><span class="nv">right</span>
 <span class="w">    </span><span class="k">end</span>
 <span class="k">end</span>
@@ -67,7 +67,7 @@ Loops can be nested (you can have loops in loops):</p>
 <h2 id="if-statements">If-statements</h2>
 <p>An example of a basic if-statement:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">blocked</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I can&#39;t move&quot;</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;I can&#39;t move&quot;</span>
 <span class="k">endif</span>
 </code></pre></div>
 
@@ -75,10 +75,10 @@ Loops can be nested (you can have loops in loops):</p>
 Conditions can be nested (you can put if-statements inside other if-statements):</p>
 <div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="n">blocked</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">movingright</span>
-<span class="w">        </span><span class="k">print</span><span class="w"> </span><span class="ss">&quot;I&#39;m blocked while trying to go right&quot;</span>
+<span class="w">        </span><span class="n">say</span><span class="w"> </span><span class="ss">&quot;I&#39;m blocked while trying to go right&quot;</span>
 <span class="w">    </span><span class="n">endif</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">movingleft</span>
-<span class="w">        </span><span class="k">print</span><span class="w"> </span><span class="ss">&quot;I&#39;m blocked while trying to go left&quot;</span>
+<span class="w">        </span><span class="n">say</span><span class="w"> </span><span class="ss">&quot;I&#39;m blocked while trying to go left&quot;</span>
 <span class="w">    </span><span class="n">endif</span>
 <span class="n">endif</span>
 </code></pre></div>
@@ -86,9 +86,9 @@ Conditions can be nested (you can put if-statements inside other if-statements):
 <h2 id="if-else-statements">If-else statements</h2>
 <p>You can also have an else part, which happens when the condition is not true:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">blocked</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m blocked!&quot;</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;I&#39;m blocked!&quot;</span>
 <span class="k">else</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I can move into the next square&quot;</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;I can move into the next square&quot;</span>
 <span class="k">endif</span>
 </code></pre></div>
 
@@ -96,13 +96,13 @@ Conditions can be nested (you can put if-statements inside other if-statements):
 <h2 id="else-if">else-if</h2>
 <p>It's also possible to have a chain of "if" and "else if" statements like this:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">movingleft</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m going left!&quot;</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;I&#39;m going left!&quot;</span>
 <span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">movingright</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m going right!&quot;</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;I&#39;m going right!&quot;</span>
 <span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">movingup</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m moving up!&quot;</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;I&#39;m moving up!&quot;</span>
 <span class="k">else</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;I&#39;m going somewhere else! Down, it has to be!&quot;</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;I&#39;m going somewhere else! Down, it has to be!&quot;</span>
 <span class="k">endif</span>
 </code></pre></div>
 
@@ -120,7 +120,7 @@ Conditions can be nested (you can put if-statements inside other if-statements):
 <h2 id="using-not-in-conditions">Using "not" in conditions</h2>
 <p>You can also put <strong>not</strong> in front of any condition:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">blocked</span>
-<span class="w">    </span><span class="k">print</span><span class="w"> </span><span class="ss">&quot;I can go forward!&quot;</span>
+<span class="w">    </span><span class="n">say</span><span class="w"> </span><span class="ss">&quot;I can go forward!&quot;</span>
 <span class="w">        </span><span class="n">forward</span>
 <span class="w">    </span><span class="n">scan</span>
 <span class="n">endif</span>
@@ -128,37 +128,37 @@ Conditions can be nested (you can put if-statements inside other if-statements):
 
 <h2 id="randomness">Randomness</h2>
 <p>Sometimes it's useful to run some parts of the program depending on a random condition. The simplest way to do this is with <strong>cointoss</strong>, which makes the code inside the if-statement run half the time, at random:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">begin</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">repeat</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">cointoss</span>
-<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;Heads&quot;</span>
+<span class="w">        </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;Heads&quot;</span>
 <span class="w">    </span><span class="k">else</span>
-<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;Tails&quot;</span>
+<span class="w">        </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;Tails&quot;</span>
 <span class="w">    </span><span class="k">endif</span>
 <span class="k">end</span>
 </code></pre></div>
 
 <p>You can also <strong>roll</strong> a die and check to see if a particular number came up with <strong>rolled</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">begin</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">repeat</span>
 <span class="w">    </span><span class="nv">roll</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">rolled</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;You rolled a one&quot;</span>
+<span class="w">        </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;You rolled a one&quot;</span>
 <span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">rolled</span><span class="w"> </span><span class="mi">6</span>
-<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;You rolled a six!&quot;</span>
+<span class="w">        </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;You rolled a six!&quot;</span>
 <span class="w">    </span><span class="k">else</span>
-<span class="w">        </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;You rolled something else, it&#39;s not important.&quot;</span>
+<span class="w">        </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;You rolled something else, it&#39;s not important.&quot;</span>
 <span class="w">    </span><span class="k">endif</span>
 </code></pre></div>
 
 <p>For the Dungeons and Dragons players among you, you can roll a die of any number of sides:</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">roll</span><span class="w"> </span><span class="mi">20</span>
 <span class="k">if</span><span class="w"> </span><span class="nv">rolled</span><span class="w"> </span><span class="mi">20</span>
-<span class="w">    </span><span class="nv">print</span><span class="w"> </span><span class="s2">&quot;You rolled a 20!!!&quot;</span>
+<span class="w">    </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;You rolled a 20!!!&quot;</span>
 <span class="k">endif</span>
 </code></pre></div>
 
 <h2 id="multi-command-lines">Multi-command lines</h2>
 <p>You can put more than one command on a line by separating them with semicolons:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">begin</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">repeat</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">blocked</span>
 <span class="w">        </span><span class="nv">right</span>
 <span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">onscanned</span>

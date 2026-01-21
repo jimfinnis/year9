@@ -1,14 +1,16 @@
-// These are the compiled instructions. Each has a "run" method 
-// that takes the running context.
+// These are the compiled instructions. Each has a "run" method  that takes the
+// running Language object - this is called "c" for historical reasons (used
+// to be a Context object)
+
 // The constructor takes a line number in the actions box; by default
-// this just increments the program counter.
+// the constructor just increments the program counter by calling Language's next().
 
 instructions = []    // list of compiled instructions
 
 class Instruction {
 	constructor(line){
 		this.line=line
-		this.addr = -1  // this will get patched by Context.add()
+		this.addr = -1  // this will get patched by Language.add()
 	}
 	run(c){c.next()}
 	toString(){
@@ -55,6 +57,9 @@ class InstPrint extends Instruction {
 		const parts = action.split(/\s+(?=(?:[^"]*"[^"]*")*[^"]*$)/);
 		// strip quotes
 		this.s = parts[1]?.replace(/^"|"$/g, '')
+		if(typeof(this.s)=="undefined"){
+			throw new Error("error in 'say' action: can't analyse text - perhaps it isn't surrounded by quotes")
+		}
 	} 
 	run(c){
 		addOutput(this.s)

@@ -10,6 +10,10 @@ roverImg.src = "exomars.png"; // Ensure file exists next to this HTML
 
 // milliseconds between steps in program
 const STEPTIME = 100
+const FASTSTEPTIME = 20
+
+// is there an active timeout? We keep this to stop students hammering the Run Program button
+running = false
 
 // the compiler and instruction interpreter for the language
 language = new Language()
@@ -156,7 +160,11 @@ function clearOutput(){
 }
 
 function clearProgram() {
-	document.getElementById("programBox").value = "";
+	if(confirm("This will wipe your program! Are you absolutely sure?")){
+		// see proviso on this function about deprecation of execCommand; should be
+		// OK though.
+		replaceAllTextPreservingUndo(document.getElementById("programBox"), "")
+	}
 }
 
 function clearData() {
@@ -208,21 +216,34 @@ function stepProgram(event){
 	draw()
 }
 
-function runProgram() {
+function runProgram(event) {
+	// only let this happen if the user isn't already running the code!
+	if(running){
+		console.log("already running")
+		return;
+	}
+	running = true
+
+	var stepTime = event.shiftKey ? FASTSTEPTIME : STEPTIME
+		
+
 	language.reset(bot)
 	language.compile(document.getElementById("programBox").value)
 	clearData(); // clear the data window
+
 	function step() {
 		try {
 			// don't update and reset the timeout if the run has ended
 			if(language.stopped()){
 				language.stopFlag = false;
+				running = false;
+				console.log("stopping")
 				return;
 			}
 			// run the next instruction
 			language.step()
 			// set a timeout to run the next one
-			setTimeout(step, STEPTIME); // delay between actions
+			setTimeout(step, stepTime); // delay between actions
 		} catch(e) {
 			addOutput("Internal error: "+e.message)
 			throw e  // rethrow so we can see console error
@@ -242,6 +263,39 @@ function showInstructions(){
 	language.compile(document.getElementById("programBox").value)
 	language.dump()
 }
+
+function replaceAllTextPreservingUndo(textarea, s) {
+	if(!document.queryCommandSupported("insertText")){
+		// it's not a great check because this check is also deprecated (for pity's sake)
+		// but it's something.
+		textarea.value=s
+		return
+	}
+    const scrollTop = textarea.scrollTop;
+
+    textarea.focus();
+    textarea.select(); // select all
+
+	// Yes, this is deprecated formally, but pretty much every browser still supports it
+	// because there's no alternative (without pulling in editor libraries like Slate.js)
+    document.execCommand("insertText", false, s);
+
+	// remove the selection and leave the caret at the end
+	const end = s.length
+	textarea.setSelectionRange(end,end)
+
+    textarea.scrollTop = scrollTop;
+}
+
+
+function reformatProgram(){
+	t = document.getElementById("programBox")
+	src = language.indentCode(t.value)
+	replaceAllTextPreservingUndo(t, src)
+
+
+}
+
 	
 // -----------------------------------------------------------
 // GO TO COORDINATE FUNCTION

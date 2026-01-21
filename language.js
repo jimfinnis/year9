@@ -14,6 +14,7 @@ class Language {
 		this.stack = [] // stack of loop data
 		this.dice = 0 // the "dice roll" value
 		this.bot = bot  // set the robot we're working with
+		this.count = 0 // how many instructions since start
 	}
 
 	// add an instruction, returning its address
@@ -37,6 +38,7 @@ class Language {
 	
 	stop(){
 		this.stopFlag = true
+		addOutput("Run stopped after "+this.count+" actions!")
 	}
 	
 	// return true if we're out of instructions or the stop flag is set
@@ -81,12 +83,12 @@ class Language {
 					else if(action === "scan"){
 						this.add(new InstScan(lineno))
 					}
-					else if(action.startsWith("print")){
+					else if(action.startsWith("say") || action.startsWith("print")){
 						// format: print "some string"
 						// we pass the whole action into the instruction constructor for parsing
 						this.add(new InstPrint(lineno,action))
 					}
-					else if(action.startsWith("begin")) {
+					else if(action.startsWith("repeat") || action.startsWith("begin")) {
 						let times = action.split(" ");
 						if(times.length>1){
 							times = parseInt(times[1].trim());
@@ -248,6 +250,7 @@ class Language {
 		// highlight it in the program window and run it
 		highlightProgLine(inst.line)
 		inst.run(this)
+		this.count++
 		draw()
 		updateData(this)
 	}
@@ -258,6 +261,85 @@ class Language {
 			console.log(`${i.addr.toString().padStart(4,' ')}: ${i.toString()}`)
 		}
 	}
+	indentCode(source) {
+		const lines = source.split(/\r?\n/);
+		const out = [];
+		let indent = 0;
+
+		const startsBlock = stmt =>
+			/^(repeat|if|begin)\b/.test(stmt);
+
+		const endsBlock = stmt =>
+			/^(end|endif)\b/.test(stmt);
+
+		const midBlock = stmt =>
+			/^(else\b|else if\b)/.test(stmt);
+
+		for (let raw of lines) {
+			if (raw.trim() === "") {
+				out.push("");
+				continue;
+			}
+
+			// Capture original leading whitespace for comment preservation
+			const leadingWS = raw.match(/^\s*/)[0];
+
+			// Separate code from comment
+			let code = raw;
+			let comment = "";
+			const hashIndex = raw.indexOf("#");
+			if (hashIndex !== -1) {
+				code = raw.slice(0, hashIndex);
+				comment = raw.slice(hashIndex); // keep comment exactly
+			}
+
+			// Split into statements
+			const statements = code
+				.split(";")
+				.map(s => s.trim())
+				.filter(s => s.length > 0);
+
+			const formatted = [];
+
+			for (let stmt of statements) {
+
+				// Closing block: reduce indent first
+				if (endsBlock(stmt)) {
+					indent = Math.max(indent - 1, 0);
+				}
+
+				// Mid-block (else / else if)
+				if (midBlock(stmt)) {
+					indent = Math.max(indent - 1, 0);
+					formatted.push("\t".repeat(indent) + stmt);
+					indent++; // restore indent for following statements
+					continue;
+				}
+
+				// Normal statement
+				formatted.push("\t".repeat(indent) + stmt);
+
+				// Opening block: increase indent afterwards
+				if (startsBlock(stmt)) {
+					indent++;
+				}
+			}
+
+			// Reattach comment with ORIGINAL indentation
+			if (comment) {
+				if (formatted.length === 0) {
+					// comment-only line
+					out.push(leadingWS + comment);
+				} else {
+					// attach comment to last statement, but keep comment's own indent
+					const last = formatted.pop();
+					formatted.push(last + " " + comment);
+				}
+			}
+
+			out.push(...formatted);
+		}
+
+		return out.join("\n");
+	}
 }
-	
-	
