@@ -38,6 +38,13 @@ repeat 4
 end
 ```
 
+## Errors
+If you make a mistake in the language, you'll see a message like this:
+```
+Error in program at line 5: (some message here)
+```
+The lines are numbered from zero - so the first line is line zero. The message will hopefully give you a clue about what the error is.
+
 ## If-statements
 
 An example of a basic if-statement:

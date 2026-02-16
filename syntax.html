@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-3 col-lg-2">
             <nav class="sticky-top vh-100 overflow-auto pt-3">
-                <ul><li><a href="#language-syntax">Language syntax</a><ul><li><a href="#simple-commands">Simple commands</a></li><li><a href="#loops">Loops</a></li><li><a href="#if-statements">If-statements</a></li><li><a href="#if-else-statements">If-else statements</a></li><li><a href="#else-if">else-if</a></li><li><a href="#conditions-in-if-statements">Conditions in if-statements</a></li><li><a href="#using-not-in-conditions">Using "not" in conditions</a></li><li><a href="#randomness">Randomness</a></li><li><a href="#multi-command-lines">Multi-command lines</a></li></ul></li></ul>
+                <ul><li><a href="#language-syntax">Language syntax</a><ul><li><a href="#simple-commands">Simple commands</a></li><li><a href="#loops">Loops</a></li><li><a href="#errors">Errors</a></li><li><a href="#if-statements">If-statements</a></li><li><a href="#if-else-statements">If-else statements</a></li><li><a href="#else-if">else-if</a></li><li><a href="#conditions-in-if-statements">Conditions in if-statements</a></li><li><a href="#using-not-in-conditions">Using "not" in conditions</a></li><li><a href="#randomness">Randomness</a></li><li><a href="#multi-command-lines">Multi-command lines</a></li></ul></li></ul>
             </nav>
             </div>
             <main class="col-md-9 col-lg-10 p-3">
@@ -64,6 +64,12 @@ Loops can be nested (you can have loops in loops):</p>
 <span class="k">end</span>
 </code></pre></div>
 
+<h2 id="errors">Errors</h2>
+<p>If you make a mistake in the language, you'll see a message like this:</p>
+<div class="codehilite"><pre><span></span><code>Error in program at line 5: (some message here)
+</code></pre></div>
+
+<p>The lines are numbered from zero - so the first line is line zero. The message will hopefully give you a clue about what the error is.</p>
 <h2 id="if-statements">If-statements</h2>
 <p>An example of a basic if-statement:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="nv">blocked</span>
@@ -147,6 +153,7 @@ Conditions can be nested (you can put if-statements inside other if-statements):
 <span class="w">    </span><span class="k">else</span>
 <span class="w">        </span><span class="nv">say</span><span class="w"> </span><span class="s2">&quot;You rolled something else, it&#39;s not important.&quot;</span>
 <span class="w">    </span><span class="k">endif</span>
+<span class="k">end</span>
 </code></pre></div>
 
 <p>For the Dungeons and Dragons players among you, you can roll a die of any number of sides:</p>
@@ -159,19 +166,8 @@ Conditions can be nested (you can put if-statements inside other if-statements):
 <h2 id="multi-command-lines">Multi-command lines</h2>
 <p>You can put more than one command on a line by separating them with semicolons:</p>
 <div class="codehilite"><pre><span></span><code><span class="nv">repeat</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">blocked</span>
-<span class="w">        </span><span class="nv">right</span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">onscanned</span>
-<span class="w">        </span><span class="nv">roll</span><span class="w"> </span><span class="mi">4</span><span class="c1">;if rolled 1;right;endif</span>
-<span class="w">    </span><span class="k">else</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nv">facingscanned</span><span class="c1">;right;endif</span>
-<span class="w">        </span><span class="nv">scan</span>
-<span class="w">    </span><span class="k">endif</span>
-<span class="w">    </span><span class="nv">forward</span>
-
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">allscanned</span>
-<span class="w">        </span><span class="nv">stop</span>
-<span class="w">    </span><span class="k">endif</span>
+<span class="w">    </span><span class="nv">scan</span><span class="c1">;forward</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">blocked</span><span class="c1">;leave;endif</span>
 <span class="k">end</span>
 </code></pre></div>
             </main>

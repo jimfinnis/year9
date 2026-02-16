@@ -53,10 +53,11 @@ class Language {
 		let compilestack = []  // stack for compilation purposes (if..then, mainly)
 		let loopstack = [] // stack of loop start instructions
 
+		let lineno = 0
 		const actions = program.split("\n").map(a => a.trim().toLowerCase());
 		
 		try {
-			for(let lineno=0;lineno<actions.length;lineno++){
+			for(lineno=0;lineno<actions.length;lineno++){
 				let line = actions[lineno]
 				// deal with comments
 				if(line.includes("#")){
@@ -227,7 +228,7 @@ class Language {
 				throw new Error("'if' without an 'endif'?")
 			}
 		} catch(e) {
-			syntaxError(e.message)
+			syntaxError(e.message, lineno)
 			this.instructions = []
 			throw e // rethrow for console inspection
 		}

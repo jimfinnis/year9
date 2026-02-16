@@ -141,8 +141,8 @@ function addOutput(s) {
 	box.scrollTop = box.scrollHeight;
 }
 
-function syntaxError(s) {
-	addOutput("Error in program:" + s);
+function syntaxError(s,lineno) {
+	addOutput("Error in program at line "+lineno+" :" + s);
 }
 
 
@@ -222,7 +222,6 @@ function runProgram(event) {
 		console.log("already running")
 		return;
 	}
-	running = true
 
 	var stepTime = event.shiftKey ? FASTSTEPTIME : STEPTIME
 		
@@ -230,6 +229,8 @@ function runProgram(event) {
 	language.reset(bot)
 	language.compile(document.getElementById("programBox").value)
 	clearData(); // clear the data window
+
+	running = true
 
 	function step() {
 		try {
